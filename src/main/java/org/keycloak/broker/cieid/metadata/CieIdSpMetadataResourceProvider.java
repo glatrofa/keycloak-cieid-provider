@@ -514,6 +514,21 @@ public class CieIdSpMetadataResourceProvider implements RealmResourceProvider {
                 technicalContactPerson.setExtensions(new ExtensionsType());
 
                 Document doc = DocumentUtil.createDocument();
+              
+                if (isSpPrivate)
+                {
+                    // Private qualifier
+                    Element spTypeElement = doc.createElementNS(CIEID_METADATA_EXTENSIONS_NS, "cie:Private");
+                    spTypeElement.setAttributeNS(XMLNS_NS, "xmlns:cie", CIEID_METADATA_EXTENSIONS_NS);
+                    technicalContactPerson.getExtensions().addExtension(spTypeElement);
+                }
+                else
+                {
+                    // Public qualifier
+                    Element spTypeElement = doc.createElementNS(CIEID_METADATA_EXTENSIONS_NS, "cie:Public");
+                    spTypeElement.setAttributeNS(XMLNS_NS, "xmlns:cie", CIEID_METADATA_EXTENSIONS_NS);
+                    technicalContactPerson.getExtensions().addExtension(spTypeElement);
+                }
 
                 // VAT Number
                 if (!StringUtil.isNullOrEmpty(technicalContactVatNumber))
